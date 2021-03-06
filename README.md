@@ -3,25 +3,27 @@ Learn docker and exercise
 
 <h2>Contents</h2>
 
-<h3><a href="#intro">Introduction<a/><h3>
-	<h4><a href="#network">Docker Network<a/><h4>
-<h3><a href="#images">Images<a/><h3>
-<h3><a href="#containers">Containers<a/><h3>
-<h3><a href="#compose">Docker Compose<a/><h3>
-<h3><a href="#swarm">Docker Swarm<a/><h3>
-<h3><a href="#k8s">Kubernetes<a/><h3>
+<h3><a href="#intro">Introduction</a></h3>
+	<h4><a href="#network">Docker Network</a></h4>
+<h3><a href="#images">Images</a></h3>
+<h3><a href="#containers">Containers</a></h3>
+<h3><a href="#compose">Docker Compose</a></h3>
+<h3><a href="#swarm">Docker Swarm</a></h3>
+<h3><a href="#k8s">Kubernetes</a></h3>
 
 
-<h2 id="intro">Introduction<h2>
+<h2 id="intro">Introduction</h2>
 
-Why Docker?
-* Developer friendly (develop faster)
-* Build faster
-* Test faster
-* Deploy faster
-* Update faster
-* Recover faster
-* Speed of business
+<b>Why Docker?</b>
+<ul>
+<li>Developer friendly (develop faster)</li>
+<li>Build faster</li>
+<li>Test faster</li>
+<li>Deploy faster</li>
+<li>Update faster</li>
+<li>Recover faster</li>
+<li>Speed of business</li>
+</ul>
 
 Containers reduce complexity => without docker: The "Matrix from Hell" Breeds Complexity
 
@@ -71,36 +73,37 @@ Process:
 * Started a new container from that image
 * Open the port 80 on the host IP
 * Routes that traffic to the container IP, port 80
+
 Note: to let the container run in the background => use --detach
-	$ docker container run --publish 80:80 --detach nginx
+	<code>$ docker container run --publish 80:80 --detach nginx</code>
 	Note: the container ID is printed
 
 Note: to see the list of running containers (and find the IDs and names)
-	$ docker container ls
+	<code>$ docker container ls</code>
 	or
-	$ docker container ps
+	<code>$ docker container ps</code>
 	or
-	$ docker ps
+	<code>$ docker ps</code>
 
 Note: to see a list of all containers ever built and see the IDs and names
-	$ docker container ls -a
+	<code>$ docker container ls -a</code>
 	or
-	$ docker container ps -a
+	<code>$ docker container ps -a</code>
 	or
-	$ docker ps --all
+	<code>$ docker ps --all</code>
 
 Note: to specify a custom name for the container: use --name anyName
-	$ docker container run --publish 80:80 --detach --name webhost nginx
+	<code>$ docker container run --publish 80:80 --detach --name webhost nginx</code>
 	Note: like a container id, name is also unique (can log, stop, or remove with container name)
 
 Note: to see the running processes inside a container
-	$ docker container top <container-name>
+	<code>$ docker container top <container-name></code>
 	Note: top is the same command like top and htop we use to see the processes of an operating system
 	Example:
-		$ docker container top webhost
+		<code>$ docker container top webhost</code>
 
 Note: to see a list of all commands you can run on a container:
-	$ docker container --help
+	<code>$ docker container --help</code>
 
 Remove the containers with status exited
 * $ docker container ls -a  => get the first few letters of all containers you want to remove
@@ -196,7 +199,8 @@ Alpine Linux
 *  $ docker container run -it alpine sh => works
 - alpine package manager is apk. You can use apk to install bash if you need
 
-Docker Networks
+<h3 id="network">Docker Networks</h3>
+
 - Each container connected to a private virtual network "bridge"
 - Note: Two containers connected to the same virtual network can communicate with each other by default and we don't need to open ports for their communications
 - Example: -p 8080:80 => 8080 is the port in the actual network of the host (router) and 80 is the virtual network port
