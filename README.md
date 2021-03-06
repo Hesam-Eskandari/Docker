@@ -382,7 +382,7 @@ Build A Custom Image
 
  
 <h2 id="containers-ref">Containers</h2>
-<h5>&emsp;&emsp;Back to <a href="contents-ref">Contents<a/></h5>
+<h5>&emsp;&emsp;Back to <a href="#contents-ref">Contents<a/></h5>
 	
 * Containers are meant to be immutable and ephemeral
 * Immutable infrastructure: only re-deploy containers, never change
@@ -434,7 +434,7 @@ Build A Custom Image
 
 
 <h2 id="compose-ref">Docker Compose</h2>
-<h5>&emsp;&emsp;Back to <a href="contents-ref">Contents</a></h5>
+<h5>&emsp;&emsp;Back to <a href="#contents-ref">Contents</a></h5>
 
 * Why to use docker compose: 
     * Configure relationships between containers
