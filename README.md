@@ -4,19 +4,19 @@ Learn docker and exercise
 <h2>Contents</h2>
 
 <h3><a href="#intro">Introduction</a></h3>
-<h4>&emsp;&emsp;<a href="#docker">Why Docker?</a></h4>
-<h4>&emsp;&emsp;<a href="#imgconr">Images & Containers</a></h4>
-<h4>&emsp;&emsp;<a href="#network">Docker Network</a></h4>
-<h3><a href="#images">Images</a></h3>
-<h3><a href="#containers">Containers</a></h3>
-<h3><a href="#compose">Docker Compose</a></h3>
-<h3><a href="#swarm">Docker Swarm</a></h3>
-<h3><a href="#k8s">Kubernetes</a></h3>
+<h4>&emsp;&emsp;<a href="#why-docker-ref">Why Docker?</a></h4>
+<h4>&emsp;&emsp;<a href="#imgconr-ref">Images & Containers</a></h4>
+<h4>&emsp;&emsp;<a href="#network-ref">Docker Network</a></h4>
+<h3><a href="#images-ref">Images</a></h3>
+<h3><a href="#containers-ref">Containers</a></h3>
+<h3><a href="#compose-ref">Docker Compose</a></h3>
+<h3><a href="#swarm-ref">Docker Swarm</a></h3>
+<h3><a href="#k8s-ref">Kubernetes</a></h3>
 
 &nbsp;
-<h2 id="intro">Introduction</h2>
+<h2 id="intro-ref">Introduction</h2>
 
-<h3 id="docker">Why Docker?</h3>
+<h3 id="why-docker-ref">Why Docker?</h3>
 <ul>
 <li>Developer friendly (develop faster)</li>
 <li>Build faster</li>
@@ -63,7 +63,7 @@ Starting from 2017 docker added docker management commands to organize commands
 	Note: See the full list of management commands and commands:
 		$ docker
 
-<h3 id="imgconr">Image vs. Container</h3>
+<h3 id="imgconr-ref">Image vs. Container</h3>
 	Image: It is the application we want to run
 	Container: it is an instance of that image running as a process
 	Note: You can have many containers running off the same image
@@ -203,7 +203,7 @@ Alpine Linux
 *  $ docker container run -it alpine sh => works
 - alpine package manager is apk. You can use apk to install bash if you need
 
-<h3 id="network">Docker Networks</h3>
+<h3 id="network-ref">Docker Networks</h3>
 
 - Each container connected to a private virtual network "bridge"
 - Note: Two containers connected to the same virtual network can communicate with each other by default and we don't need to open ports for their communications
@@ -268,7 +268,7 @@ Assignment
 - Note: use --rm when running a container to make sure it will be removed once it stops running
 - Note: In ubuntu: apt-get install -y curl => -y will install it if not exist already
 
-<h2 id="images">Images</h2>
+<h2 id="images-ref">Images</h2>
 
 Official definition: "An image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime"
 
