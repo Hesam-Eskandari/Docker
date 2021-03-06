@@ -207,6 +207,7 @@ Alpine Linux
 - alpine package manager is apk. You can use apk to install bash if you need
 
 <h3 id="network-ref">Docker Networks</h3>
+<h5>&emsp;&emsp; Back to <a href="#intro-ref">Introduction</a></h5>
 
 - Each container connected to a private virtual network "bridge"
 - Note: Two containers connected to the same virtual network can communicate with each other by default and we don't need to open ports for their communications
@@ -380,7 +381,157 @@ Build A Custom Image
     * Keep the things that change more at the bottom. Of the Dockerfile
 
  
+<h2 id="containers-ref">Containers</h2>
+<h5>&emsp;&emsp;Back to <a href="contents-ref">Contents<a/></h5>
+	
+* Containers are meant to be immutable and ephemeral
+* Immutable infrastructure: only re-deploy containers, never change
+    * Benefit: reliability, consistency, and making changes reproducible. 
+    * Concerns: what about databases, or unique data? (Known as separation of concerns)
+* Docker gives us features to ensure "separation of concerns" known as "persistent data"
+    * Two ways of persistent data:
+        * Volumes: make special location outside of container UFS
+        * Bind Mounts: sharing or mounting a host directory or file into a container.
+    * Volumes or bind mounts look like a local path to the container. It doesn't actually know that it's coming from a host or somewhere outside of the container. 
+* Volumes
+    * You can use VOLUME instruction in a Dockerfile
+    * Example: see the Dockerfile for a mysql image and check VOLUME instruction and the path to it
+    * Each file that you put in the path given to VOLUME, will outlive the container
+    * Volumes need manual deletion. You can't clean them up just by removing a container
+    * Cleanup all unused volumes: $ docker volume prune
+    * See the volumes and mounts of a container: $ docker container inspect <container-name-ID>
+    * Mounts: 
+        * Name of the volume => you can change it to something meaningful
+        * Source: the actual directory where data lives in the host (outside of the container)
+        * Destination: location in the container where it thinks data actually lives
+    * Volumes:
+        * List of all volume directories in the container
+    * See all the volumes of all containers: $ docker volumes ls => volume name = some ID
+        * The ID is confusing and it does not give us any information in what container the volume lives
+        * $ docker volume inspect <volume-ID> => only info about volume itself
+        * The inspection also gives a Mountpoint address that lives inside the linux (VM) kernel
+            * If you use linux machine you can navigate to this address and see the data
+        * We can see from container perspective what volumes it's using
+        * We cannot see from volume perspective what it's connected to
+        * Remember that the volumes will not go away if you stop or even remove the container it is connected to
+        * Solution: 
+            1. Named volume when running a container: -v <volumeName>:<path>
+			Example: $ docker container run -d --name mysql -p 3306:3306 -v mysql-data:/var/lib/mysql mysql
+            2. Create a volume with 'docker volume create' and use VOLUME instruction in Dockerfile
+    * Looking through the README.md or Dockerfile of the mysql official image, you could find the database path documented or the VOLUME stanza
+* Bind Mounting
+    * It maps a host file or directory to a container file or directory
+    * Basically just two locations pointing to the same files
+    * Cannot use in Dockerfile, must be at container run
+    * Usage: ... run -v <path-on-host>:<path-in-container>
+        * Example: Mac/Linux: ...  run -v /Users/hesam/mysql:/var/lib/mysql
+        * Example: Windows: ... run -v //c/Users/hesam:/var/lib/mysql
+        * Also to specify the current directory before the colon, you can use:
+            * In Linux/MacOS bash, sh, zsh, and windows docker toolbox QuickStart terminal: $(pwd)
+            * For PowerShell: ${pwd}
+            * For cmd.exe "command prompt": %cd%
+        * Example: in Linux/Mac:  ...  run -v $(pwd):/var/lib/mysql
 
+
+<h2 id="compose-ref">Docker Compose</h2>
+<h5>&emsp;&emsp;Back to <a href="contents-ref">Contents</a></h5>
+
+* Why to use docker compose: 
+    * Configure relationships between containers
+    * Save our docker container run settings in easy-to-read file
+    * Create one-liner developer environment startups
+
+* Comprised of two separate but related things
+    1. YAML- formatted file that describes our solution options for:
+        * Containers
+        * Networks
+        * Volumes
+        * Environmental Variables
+        * Images
+        * etc
+    2. A CLI tool docker-compose used for local dev/test automation with those YAML files
+
+* docker-compose.yml 
+    * First line is it's own versions: 1, 2, 2.1, 3, 3.1
+    * YAML file can be used with 'docker-compose' command for local docker automation
+    * It could be also used with 'docker' directly in production with Swarm (as of v1.13)
+    * Always reach 'docker-compose --help' for more options and info
+    * Default docker compose file is: docker-compose.yml
+    * You can use any yml file as well with the command: $ docker-compose -f <filename>
+    * Example:
+
+	(docker-compose.yml)
+		version: '3.1' # if no version is specified then v1 is assumed. Recommend v2 minimum
+		services:   # containers. Same as docker run
+			servicename: # a friendly name. This is also DNS name inside network
+				image: # optional if you use build
+				command: # optional, replace the default CMD specified by the image
+				environment: # optional, same as -e in docker run
+				volumes: # optional, sam as -v in docker run
+				depends_on: # list of service names that are required for this service
+					- servicename1
+					- servicename2
+			servicename2: 
+		volumes: # optional, same as docker volume create
+		networks: # optional, same as docker network create 
+
+* Example: 
+    * Docker run command: $ docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+    * Docker-compose.yml
+		version: '2'
+		services: 
+			jekyll:
+				images: bretfisher/jekyll-serve
+				volumes:
+					- .:/site
+				ports:
+					- '80:4000'
+* In docker compose yaml file:
+    * If something has only one option (such as image), it's in the key:value format
+    * If something has multiple options (such as volumes and ports), it's in the following format:
+        * key: 
+			- value1
+			- value2
+    * Something could have multiple options of each with formatted as key:value. See the following example:
+        * servicename:
+			environment:
+				WORDPRESS_DB_PASSWORD: example
+				key1: value1
+				key2:value2
+
+* docker-compose CLI 
+    * It comes with Docker for Windows and Mac, but it's a separate download for Linux
+    * Not a production-grade tool but ideal for local development and test
+    * Two most common commands:
+        * docker-compose up # setup volumes/networks and stat all containers
+        * docker-compose down #stop all containers and remove cont/vol/net
+*  Use -d to just detach the process from terminal
+* See the logs: $ docker-compose logs
+* See the containers running: $ docker-compose ps
+* See the processes inside containers: $ docker-compose top
+* Note: to remove volumes with compose down: $ docker-compose down -v
+
+* Use docker compose to build images
+    * It builds images with 'docker compose up' if not found in cache
+    * Rebuild image with docker compose build
+    * Great for complex builds that have lots of vars or build args
+    * Example:
+		version: '3'
+		services:
+			servicename:  # example: proxy
+				build: 
+					context: .  # directory which we want to build the image in (same as directory of Dockerfile)
+					dockerfile: nginxDockerfile   # put the Dockerfile name
+				image: nginx-custom
+				ports:
+					- '80:80'
+				...
+
+    * It builds the image if the image name is not cached
+    * Note: the command 'docker compose down' does nor remove the built image with custom tag
+    * Note: to manually remove an image after compose down: $ docker image rm <imageName>
+    * Note: It would automatically choose a name for an image if not specified in docker-compose.yml
+    * Note: the command 'docker compose down --rmi local' would also remove images without custom name 
 
 
 
