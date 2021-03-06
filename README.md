@@ -3,17 +3,16 @@ Learn docker and exercise
 
 <h2>Contents</h2>
 
-<h3><a href="#requirements">Introduction<a/><h3>
+<h3><a href="#intro">Introduction<a/><h3>
+	<h4><a href="#network">Docker Network<a/><h4>
 <h3><a href="#images">Images<a/><h3>
-* Docker Networking
-* Docker Volumes
-* Docker Compose
-* Orchestration
-* Dock Swarm
-* Kubernetes
-* Swarm vs. K8s
+<h3><a href="#containers">Containers<a/><h3>
+<h3><a href="#compose">Docker Compose<a/><h3>
+<h3><a href="#swarm">Docker Swarm<a/><h3>
+<h3><a href="#k8s">Kubernetes<a/><h3>
 
-<h2 id="requirements">Introduction<h2>
+
+<h2 id="intro">Introduction<h2>
 
 Why Docker?
 * Developer friendly (develop faster)
