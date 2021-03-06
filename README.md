@@ -4,17 +4,19 @@ Learn docker and exercise
 <h2>Contents</h2>
 
 <h3><a href="#intro">Introduction</a></h3>
-	<h4><a href="#network">Docker Network</a></h4>
+<h4>&emsp;&emsp;<a href="#docker">Why Docker?</a></h4>
+<h4>&emsp;&emsp;<a href="#imgconr">Images & Containers</a></h4>
+<h4>&emsp;&emsp;<a href="#network">Docker Network</a></h4>
 <h3><a href="#images">Images</a></h3>
 <h3><a href="#containers">Containers</a></h3>
 <h3><a href="#compose">Docker Compose</a></h3>
 <h3><a href="#swarm">Docker Swarm</a></h3>
 <h3><a href="#k8s">Kubernetes</a></h3>
 
-
+&nbsp;
 <h2 id="intro">Introduction</h2>
 
-<b>Why Docker?</b>
+<h3 id="docker">Why Docker?</h3>
 <ul>
 <li>Developer friendly (develop faster)</li>
 <li>Build faster</li>
@@ -27,10 +29,12 @@ Learn docker and exercise
 
 Containers reduce complexity => without docker: The "Matrix from Hell" Breeds Complexity
 
-Editions
-* Docker CE (Community Edition): free
-* Docker EE (Enterprise Edition): paid => docker.com/pricing 
-* Note: Docker editions at store.docker.com
+<b>Editions</b>
+<ul>
+<li>Docker CE (Community Edition): free</li>
+<li>Docker EE (Enterprise Edition): paid => docker.com/pricing </li>
+<li>Note: Docker editions at store.docker.com</li>
+</ul>
 
 Stable vs. Edge
 	Edge: beta => it comes out every month => support on old ones discontinue after new one comes out (every month)
@@ -59,7 +63,7 @@ Starting from 2017 docker added docker management commands to organize commands
 	Note: See the full list of management commands and commands:
 		$ docker
 
-Image vs. Container
+<h3 id="imgconr">Image vs. Container</h3>
 	Image: It is the application we want to run
 	Container: it is an instance of that image running as a process
 	Note: You can have many containers running off the same image
